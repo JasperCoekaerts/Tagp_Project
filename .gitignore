@@ -1,0 +1,7 @@
+LICENSE
+Makefile
+erlang.mk
+rebar.config
+rebar.loc
+.travis.yml
+
