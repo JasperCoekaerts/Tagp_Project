@@ -11,3 +11,4 @@ rebar.config
 rebar.lock
 .travis.yml
 
+*.beam
