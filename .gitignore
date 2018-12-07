@@ -1,7 +1,13 @@
+c_src/
+doc/
+examples/
+ebin/
+priv/
+src/
 LICENSE
 Makefile
 erlang.mk
 rebar.config
-rebar.loc
+rebar.lock
 .travis.yml
 
