@@ -16,14 +16,15 @@ init() -> survivor:entry(cableTyp_created), loop().
 	% dimensions
 		% surface area of section mm^2
 		% length in mm
-		%TypeOptions = {Resistance, Material, CrossSectionShape, InsulationWidth, Umax, Imax, Pmax, {SectionArea, Length}}}
+		
+	%TypeOptions = {Resistance, Material, CrossSectionShape, InsulationWidth, Umax, Imax, Pmax, {SectionArea, Length}}}
 
 loop() ->
     receive
 	{initial_state, [ResInst_Pid, TypeOptions], ReplyFn} ->
 	    Location = location:create(ResInst_Pid, emptySpace),
-	    In = connector:create(ResInst_Pid, simpleCable),
-	    Out = connector:create(ResInst_Pid, simpleCable),
+	    In = connector:create(ResInst_Pid, cable),
+	    Out = connector:create(ResInst_Pid, cable),
 	    ReplyFn(#{resInst => ResInst_Pid, chambers => [Location], 
 	    cList => [In, Out], typeOptions => TypeOptions}),
 	    loop();
