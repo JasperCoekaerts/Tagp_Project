@@ -1,4 +1,4 @@
--module(resource_type).
+-module(resourceType).
 -export([create/2]).
 -export([get_initial_state/3, get_connections_list/2, get_locations_list/2]).
 
