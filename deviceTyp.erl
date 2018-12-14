@@ -4,7 +4,7 @@
 -export([init/0, loop/0]).
 
 
-create() -> spawn_link(?MODULE, init, []).
+create() -> {ok, spawn_link(?MODULE, init, [])}.
 init() -> survivor:entry(deviceTyp_created), loop().
 
 % Things that define a device:
@@ -13,25 +13,29 @@ init() -> survivor:entry(deviceTyp_created), loop().
 	% start/stop and runtime behaviour
 	% Type of source(alternating/direct current, Voltage)
 	% connectors
+	% on - off
 	
 	
-	%TypeOptions = {ElectricBehavior, PowerDraw, StartBehavior, StopBehaviour, RuntimeBehaviour, Vmax, Pmax, sourceTyp}
+	%TypeOptions = {ElectricBehavior, PowerDraw, StartBehaviorFN, StopBehaviourFN, RuntimeBehaviourFN, Vmax, Pmax, sourceTyp}
 
 loop() ->
     receive
-	{initial_state, [ResInst_Pid, TypeOptions], ReplyFn} ->
-	    Location = location:create(ResInst_Pid, emptySpace),
-	    In = connector:create(ResInst_Pid, device),
-	    Out = connector:create(ResInst_Pid, device),
-	    ReplyFn(#{resInst => ResInst_Pid, chambers => [Location], 
-	    cList => [In, Out], typeOptions => TypeOptions}),
-	    loop();
-	{connections_list, State , ReplyFn} -> 
-	    #{cList := C_List} = State, ReplyFn(C_List), 
-	    loop();
-	{locations_list, State, ReplyFn} -> 
-	    #{chambers := L_List} = State, ReplyFn(L_List),
-	    loop()
+	{initial_state, [ResInst_Pid, [CableInst_Pid, RealWorldCmdFn], TypeOptions], ReplyFn} ->
+		ReplyFn(#{resInst => ResInst_Pid, cableInst => CableInst_Pid, 
+					rw_cmd => RealWorldCmdFn, on_or_off => off, typeOptions => TypeOptions}), 
+		loop();
+	{switchOff, State, ReplyFn} -> 
+		#{rw_cmd := ExecFn} = State, ExecFn(off), 
+		ReplyFn(State#{on_or_off := off}),
+		loop(); 
+	{switchOn, State, ReplyFn} -> 
+		#{rw_cmd := ExecFn} = State, ExecFn(on), 
+		ReplyFn(State#{on_or_off := on}),
+		loop(); 
+	{isOn, State, ReplyFn} -> 
+		#{on_or_off := OnOrOff} = State, 
+		ReplyFn(OnOrOff),
+		loop()
     end. 
 
 

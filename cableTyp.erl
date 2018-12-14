@@ -35,7 +35,3 @@ loop() ->
 	    #{chambers := L_List} = State, ReplyFn(L_List),
 	    loop()
     end. 
-
-
-
-		
