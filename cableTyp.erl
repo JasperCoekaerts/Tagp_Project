@@ -3,7 +3,7 @@
 
 -export([loop/0, init/0]).
 
-create() -> spawn_link(?MODULE, init, []).
+create() -> {ok, spawn_link(?MODULE, init, [])}.
 init() -> survivor:entry(cableTyp_created), loop().
 
 % Things that define a cable(TypeOptions):
