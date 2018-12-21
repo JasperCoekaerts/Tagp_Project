@@ -69,26 +69,26 @@ loop_test(State) ->
 	{get_inductance, ReplyFn} -> 
 		ReplyFn(element(2, State)),
 		loop_test(State);
-	{set_inductance, Type} ->
-	    State2 = setelement(2, State, Type),
+	{set_inductance, Inductance} ->
+	    State2 = setelement(2, State, Inductance),
 	    loop_test(State2);
 	{get_capacitance, ReplyFn} -> 
 		ReplyFn(element(3, State)),
 		loop_test(State);
-	{set_capacitance, Resistance} ->
-	    State2 = setelement(3, State, Resistance),
+	{set_capacitance, Capacitance} ->
+	    State2 = setelement(3, State, Capacitance),
 	    loop_test(State2);
 	{get_poweruse, ReplyFn} -> 
 		ReplyFn(element(4, State)),
 		loop_test(State);
-	{set_poweruse, Type} ->
-	    State2 = setelement(4, State, Type),
+	{set_poweruse, PowerUse} ->
+	    State2 = setelement(4, State, PowerUse),
 	    loop_test(State2);
 	{get_on_off, ReplyFn} -> 
 		ReplyFn(element(6, State)),
 		loop_test(State);
-	{set_on_off, Type} ->
-	    State2 = setelement(6, State, Type),
+	{set_on_off, On_off} ->
+	    State2 = setelement(6, State, On_off),
 	    loop_test(State2)
     end.
 	
