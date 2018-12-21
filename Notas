@@ -1,8 +1,7 @@
 Notes:
-    Meters: Volt amp, ..
-	iedereen eigen inst en typ
-    Gebruikers: 1 device typ
+    Todos:
+	Instance specifieke functies
     
-    3 Fasige gebruikers uitbreiding voor zwaardere machines
-    
-    Voeg Type en Instance specifieke functies toe
+    uibreidingen:
+	Meters: Volt amp, ..iedereen eigen inst en typ
+	3 Fasige gebruikers uitbreiding voor zwaardere machines
