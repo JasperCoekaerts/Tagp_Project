@@ -1,7 +1,7 @@
 -module(switchTyp).
 -export([create/0, create_test/0]).
 
--export([loop/0, init/0, loop_test/1, init_test/1]).
+-export([loop/0, init/0, loop_test/1, init_test/1, setResistance/2, getResistance/1]).
 
 
 % Things that define a switch:
@@ -49,5 +49,15 @@ loop_test(State) ->
 	    loop_test(State);
 	{locations_list, State, ReplyFn} -> 
 	    #{chambers := L_List} = State, ReplyFn(L_List),
-	    loop_test(State)
+	    loop_test(State);
+	{get_resistance, ReplyFn} -> 
+		ReplyFn(element(1, State)),
+		loop_test(State);
+	{set_resistance, Resistance} ->
+	    State2 = setelement(1, State, Resistance),
+	    loop_test(State2)
     end.
+
+setResistance(Cable_Pid, Resistance) ->  Cable_Pid ! {set_resistance, Resistance}.
+getResistance(Cable_Pid) ->
+	msg:get(Cable_Pid, get_resistance).
