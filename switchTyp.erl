@@ -1,7 +1,7 @@
 -module(switchTyp).
 -export([create/0, create_test/0]).
 
--export([loop/0, init/0, loop_test/1, init_test/1, setResistance/2, getResistance/1]).
+-export([loop/0, init/0, loop_test/1, init_test/1, setResistance/2, getResistance/1, setType/2, getType/1]).
 
 
 % Things that define a switch:
@@ -32,7 +32,7 @@ loop() ->
     end.
 
 	
-create_test() -> {ok, spawn_link(?MODULE, init_test, [{0.01 , type}])}.
+create_test() -> {ok, spawn_link(?MODULE, init_test, [{0.01 , on_off}])}.
 init_test(State) -> survivor:entry(test_switchTyp_created), loop_test(State).
 	
 loop_test(State) ->
@@ -55,9 +55,19 @@ loop_test(State) ->
 		loop_test(State);
 	{set_resistance, Resistance} ->
 	    State2 = setelement(1, State, Resistance),
+	    loop_test(State2);
+	{get_type, ReplyFn} -> 
+		ReplyFn(element(2, State)),
+		loop_test(State);
+	{set_type, Type} ->
+	    State2 = setelement(2, State, Type),
 	    loop_test(State2)
     end.
 
-setResistance(Cable_Pid, Resistance) ->  Cable_Pid ! {set_resistance, Resistance}.
-getResistance(Cable_Pid) ->
-	msg:get(Cable_Pid, get_resistance).
+setResistance(Switch_Pid, Resistance) ->  Switch_Pid ! {set_resistance, Resistance}.
+getResistance(Switch__Pid) ->
+	msg:get(Switch_Pid, get_resistance).
+	
+setType(Switch_Pid, Resistance) ->  Switch_Pid ! {set_type, Resistance}.
+getType(Switch_Pid) ->
+	msg:get(Switch_Pid, get_type).
