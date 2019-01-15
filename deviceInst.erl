@@ -1,12 +1,12 @@
 -module(deviceInst).
--export([create/4, switch_off/1, switch_on/1, is_on/1]).
+-export([create/3, switch_off/1, switch_on/1, is_on/1]).
 
--export([init/4, loop/4]).
+-export([init/3, loop/4]).
 
-create(Host, DeviceTyp_Pid, CableInst_Pid, RealWorldCmdFn) -> {ok, spawn(?MODULE, init, [Host, DeviceTyp_Pid, CableInst_Pid, RealWorldCmdFn])}.
+create(Host, DeviceTyp_Pid, CableInst_Pid) -> {ok, spawn(?MODULE, init, [Host, DeviceTyp_Pid, CableInst_Pid])}.
 
-init(Host, DeviceTyp_Pid, CableInst_Pid, RealWorldCmdFn) -> 
-	{ok, State} = apply(resource_type, get_initial_state, [DeviceTyp_Pid, self(),     [CableInst_Pid, RealWorldCmdFn]]),
+init(Host, DeviceTyp_Pid, CableInst_Pid) -> 
+	{ok, State} = resourceType:get_initial_state(DeviceTyp_Pid, self(), []),
 	survivor:entry({ deviceInst_created, State }),
 	loop(Host, State, DeviceTyp_Pid, CableInst_Pid).
 
