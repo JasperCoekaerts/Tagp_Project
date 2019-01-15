@@ -5,7 +5,7 @@
 
 -export([create_test/0,init_test/1]).
 
-create(State) -> {ok, spawn_link(?MODULE, init, [{3, 'Copper', 'Circle', 0.2, 230, 0.016, 3.68, {2, 1000}}])}.
+create(State) -> {ok, spawn_link(?MODULE, init, [State])}.
 init(State) -> survivor:entry(cableTyp_created), loop(State).
 
 
