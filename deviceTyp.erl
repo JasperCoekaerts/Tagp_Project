@@ -8,7 +8,7 @@ create(State) -> {ok, spawn_link(?MODULE, init, [State])}.
 init(State) -> survivor:entry(deviceTyp_created), loop(State).
 
 % Things that define a device:
-	% ElectricBehavior: Resistance, inductance, capacitance
+	% Resistance, inductance, capacitance
 	% Power draw in Watt
 	% start/stop and runtime behaviour
 	% Type of source(alternating/direct current, Voltage)
@@ -16,7 +16,7 @@ init(State) -> survivor:entry(deviceTyp_created), loop(State).
 	% on - off
 	
 	
-	%TypeOptions = {ElectricBehavior, PowerDraw, Vmax, Pmax, sourceTyp}
+	%TypeOptions = {Resistance, inductance, capacitance, Vmax, Pmax, sourceTyp}
 
 create_test() -> {ok, spawn_link(?MODULE, init_test, [{100, 10, 0, 230, 1000, 2, off}])}.%Resistance, inductance, capacitance, Vmax, kWatt/h, connectors, on-off
 init_test(State) -> survivor:entry(deviceTyp_created), loop(State).
