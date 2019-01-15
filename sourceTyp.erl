@@ -21,8 +21,8 @@ init_test(State) -> survivor:entry(sourceTyp_created), loop(State).
 
 loop(State) ->
     receive
-	{initial_state, [ResInst_Pid, []], ReplyFn} ->
-		ReplyFn(#{resInst => ResInst_Pid, on_or_off => off, state => State}), 
+	{initial_state, [ResInst_Pid, TypeOptions], ReplyFn} ->
+		ReplyFn(#{resInst => ResInst_Pid, on_or_off => off,  typeOptions => TypeOptions, state => State}), 
 		loop(State);
 	{switchOff, State, ReplyFn} -> 
 		#{rw_cmd := ExecFn} = State, ExecFn(off), 
@@ -36,18 +36,21 @@ loop(State) ->
 		#{on_or_off := OnOrOff} = State, 
 		ReplyFn(OnOrOff),
 		loop(State);
+		
 	{get_imax, ReplyFn} -> 
 		ReplyFn(element(1, State)),
 		loop(State);
 	{set_imax, Imax} ->
 	    State2 = setelement(1, State, Imax),
 	    loop(State2);
+	    
 	{get_voltage, ReplyFn} -> 
 		ReplyFn(element(2, State)),
 		loop(State);
 	{set_voltage, Voltage} ->
 	    State2 = setelement(2, State, Voltage),
 	    loop(State2);
+	    
 	{get_type, ReplyFn} -> 
 		ReplyFn(element(3, State)),
 		loop(State);

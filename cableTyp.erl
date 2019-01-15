@@ -35,8 +35,8 @@ loop(State) ->
 	    ReplyFn(#{resInst => ResInst_Pid, chambers => [Location], 
 	    cList => [In, Out], typeOptions => TypeOptions, state => State}),
 	    loop(State);
-	{connections_list, State , ReplyFn} -> 
-	    #{cList := C_List} = State, ReplyFn(C_List), 
+	{connections_list, S , ReplyFn} -> 
+	    #{cList := C_List} = S, ReplyFn(C_List), 
 	    loop(State);
 	{locations_list, State, ReplyFn} -> 
 	    #{chambers := L_List} = State, ReplyFn(L_List),
