@@ -6,7 +6,7 @@
 create(Host, SourceTyp_Pid, CableInst_Pid) -> {ok, spawn(?MODULE, init, [Host, SourceTyp_Pid, CableInst_Pid])}.
 
 init(Host, SourceTyp_Pid, CableInst_Pid) -> 
-	{ok, State} = resourceType:get_initial_state(SourceTyp_Pid, self(), [CableInst_Pid]),
+	{ok, State} = resourceType:get_initial_state(SourceTyp_Pid, self(), []),
 	survivor:entry({ sourceInst_created, State }),
 	loop(Host, State, SourceTyp_Pid, CableInst_Pid).
 

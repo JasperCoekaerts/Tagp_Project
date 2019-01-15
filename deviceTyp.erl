@@ -23,8 +23,8 @@ init_test(State) -> survivor:entry(deviceTyp_created), loop(State).
 	
 loop(State) ->
     receive
-	{initial_state, [ResInst_Pid, [CableInst_Pid]], ReplyFn} ->
-		ReplyFn(#{resInst => ResInst_Pid, cableInst => CableInst_Pid, on_or_off => off, state => State}), 
+	{initial_state, [ResInst_Pid, []], ReplyFn} ->
+		ReplyFn(#{resInst => ResInst_Pid, on_or_off => off, state => State}), 
 		loop(State);
 	{switchOff, State, ReplyFn} -> 
 		#{rw_cmd := ExecFn} = State, ExecFn(off), 
