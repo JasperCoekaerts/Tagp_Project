@@ -3,10 +3,11 @@ Notes:
 	Instance specifieke functies
     	Tijdsgedrag van devices toevoegen. Mogelijke controleren in werkelijkheid met raspberry pi
     	
-    	-> debuggen
-	    nu mee bezig.
-    	-> Een circuit initializeren 
-    	
+    	-> Een circuit designen -- initializeren 
+		
+		Laatste in de lijn is gebruikers
+		Geen gebruikers in serie
+		
     	-> Verslag schrijven
     uibreidingen:
 	Meters: Volt amp, ..iedereen eigen inst en typ
