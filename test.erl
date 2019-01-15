@@ -5,7 +5,7 @@ start() ->
 	survivor:start().
 	
 createConnection() -> 
-	{ok,PidR} = resourceType:create(cableTyp, []),
+	{ok,PidR} = resourceType:create(cableTyp, [{1,2,3,4,5,6,7,{8,9}}]),
 	{ok,Pid1} = resourceInst:create(cableInst, [self(), PidR]),
 	{ok,Pid2} = resourceInst:create(cableInst, [self(), PidR]),
 	{ok, [C1, C2]} = resourceInst:list_connectors(Pid1),

@@ -3,15 +3,9 @@
 
 -export([loop/1, init/1]).
 
--export([create_test/0,init_test/1]).
-
-create(State) -> {ok, spawn_link(?MODULE, init, [{3, 'Copper', 'Circle', 0.2, 230, 0.016, 3.68, {2, 1000}}])}.
+create(State) -> {ok, spawn_link(?MODULE, init, [State])}.
 init(State) -> survivor:entry(cableTyp_created), loop(State).
 
-
-create_test() -> {ok, spawn_link(?MODULE, init_test, [{3, 'Copper', 'Circle', 0.2, 230, 0.016, 3.68, {2, 1000}}])}.
-init_test(State) -> survivor:entry(test_cableTyp_created), 
-		    loop(State).
 % Things that define a cable(TypeOptions):
 	% Resistance in ohms
 	% material: Cu, Al, Sn, Au, Ag
@@ -35,8 +29,8 @@ loop(State) ->
 	    ReplyFn(#{resInst => ResInst_Pid, chambers => [Location], 
 	    cList => [In, Out], typeOptions => TypeOptions, state => State}),
 	    loop(State);
-	{connections_list, State , ReplyFn} -> 
-	    #{cList := C_List} = State, ReplyFn(C_List), 
+	{connections_list, S , ReplyFn} -> 
+	    #{cList := C_List} = S, ReplyFn(C_List), 
 	    loop(State);
 	{locations_list, State, ReplyFn} -> 
 	    #{chambers := L_List} = State, ReplyFn(L_List),
