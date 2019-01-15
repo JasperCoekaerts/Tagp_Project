@@ -2,6 +2,12 @@ Notes:
     Todos:
 	Instance specifieke functies
     	Tijdsgedrag van devices toevoegen. Mogelijke controleren in werkelijkheid met raspberry pi
+    	
+    	-> debuggen
+	    nu mee bezig.
+    	-> Een circuit initializeren 
+    	
+    	-> Verslag schrijven
     uibreidingen:
 	Meters: Volt amp, ..iedereen eigen inst en typ
 	3 Fasige gebruikers uitbreiding voor zwaardere machines
