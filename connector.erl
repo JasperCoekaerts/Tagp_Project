@@ -1,6 +1,6 @@
 -module(connector).
 
--export([create/2, connect/2, disconnect/1, discard/1]).
+-export([create/2, connect/2, disconnect/2, discard/1, connStatus/2, remove/2,checkList/1]).
 -export([get_connected/1, get_ResInst/1, get_type/1]).
 
 -export([init/2, test/0]). % for internal use only. 
@@ -15,8 +15,8 @@ init(ResInst_Pid, ConnectTyp_Pid) ->
 connect(Connector_Pid, C_Pid) ->
 	Connector_Pid ! {connect, C_Pid}.
 
-disconnect(Connector_Pid) ->
-	Connector_Pid ! disconnect.
+disconnect(Connector_Pid, C_Pid) ->
+	Connector_Pid ! {disconnect, C_Pid}.
  
 get_connected(Connector_Pid) ->
 	msg:get(Connector_Pid, get_connected).
@@ -39,9 +39,9 @@ loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid) ->
 	receive
 		{connect, C_Pid} -> 
 			survivor:entry({connection_made, self(), C_Pid, for , ResInst_Pid}),
-			loop(ResInst_Pid, [C_Pid|Connected_Pid_List], ConnectTyp_Pid); 
-		disconnect -> 
-			loop(ResInst_Pid, disconnected, ConnectTyp_Pid);
+			loop(ResInst_Pid, connStatus(Connected_Pid_List, C_Pid), ConnectTyp_Pid);
+		{disconnect, Pid} -> 
+			loop(ResInst_Pid, remove(Pid, Connected_Pid_List), ConnectTyp_Pid);
 		{get_connected, ReplyFn} -> 
 			ReplyFn(Connected_Pid_List),
 			loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid);
@@ -55,6 +55,15 @@ loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid) ->
 			survivor:entry(connector_discarded),
 			stopped
 	end. 
+
+connStatus(disconnected, C_Pid) -> [C_Pid];
+connStatus(List,  C_Pid) -> [C_Pid| List].
+
+remove(X, L) ->
+    checkList([Y || Y <- L, Y =/= X]).
+    
+checkList([]) -> disconnected;
+checkList(L) -> L.
 
 test() -> 
 	C1_Pid = create(self(), dummy1_pid),
