@@ -3,13 +3,11 @@ Notes:
 	Instance specifieke functies
     	Tijdsgedrag van devices toevoegen. Mogelijke controleren in werkelijkheid met raspberry pi
     	
-    	-> Een circuit designen -- initializeren 
-		
-		Laatste in de lijn is gebruikers
-		Geen gebruikers in serie
-		
+    	-> Een circuit Berekenen
     	-> Verslag schrijven
     uibreidingen:
 	Meters: Volt amp, ..iedereen eigen inst en typ
 	3 Fasige gebruikers uitbreiding voor zwaardere machines
 	Code aanpassen om overzichterlijk te maken
+	Lengte kabel element van de instance en niet van het type
+	Source moet uitgebrijdt worden zodat alle kabel inst pids meegegeven kunnen worden
