@@ -30,9 +30,24 @@ test_circuit() ->
 	{ok, Kabel} = resourceType:create(cableTyp, [{1,2,3,4,5,6,7,{8,9}}]),
 	{ok, Bron} = resourceType:create(sourceTyp, [{100, 50, direct}]),
 	{ok, Gebruiker} = resourceType:create(deviceTyp, [{100, 10, 0, 230, 1000, 2, off}]),
+	{ok,Schakelaar} = resourceType:create(switchTyp, [{on_off, 100}]),
 	{ok,Kabel_1} = resourceInst:create(cableInst, [self(), Kabel]),
+	{ok,Kabel_2} = resourceInst:create(cableInst, [self(), Kabel]),
 	{ok, Bron_1} = resourceInst:create(sourceInst, [self(), Bron, Kabel_1]),
-	{ok, Gebruiker_1} = resourceType:create(deviceTyp, [self(), Gebruiker, Kabel_1]),
+	{ok,Schakelaar_1} = resourceInst:create(switchInst, [self(), Schakelaar]),
+	{ok, Gebruiker_1} = resourceType:create(deviceInst, [self(), Gebruiker, Kabel_2]),
 	{ok, [C1, C2]} = resourceInst:list_connectors(Kabel_1),
-	connector:connect(C1, Bron_1),
-	connector:connect(C2, Gebruiker_1).
+	{ok, [C3, C4]} = resourceInst:list_connectors(Kabel_2),
+	{ok, [C5, C6]} = resourceInst:list_connectors(Schakelaar_1),
+	{ok, [C7]} = resourceInst:list_connectors(Bron_1),
+	{ok, [C8, C9]} = resourceInst:list_connectors(Gebruiker_1),
+	connector:connect(C7, C1),
+	connector:connect(C2, C5),
+	Conn_list = connector:get_connected(C2),
+	survivor:entry({connection_Kabel, Conn_list}),
+	connector:connect(C6, C3),
+	survivor:entry({connection_Schakelaar, connector:get_connected(C6)}),
+	connector:connect(C4, C8),
+	survivor:entry({connection_Gebruiker, connector:get_connected(C4)}).
+
+	
