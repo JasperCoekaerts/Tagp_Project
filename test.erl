@@ -1,5 +1,5 @@
 -module(test).
--export([start/0,createConnection/0, test_conn/0, test_circuit/0, test_room/0]).
+-export([start/0,createConnection/0, test_conn/0, test_circuit/0, test_room/0, useage/1]).
 
 start() -> 
 	survivor:start(),
@@ -154,11 +154,15 @@ test_room() -> %keuken 5x5m
 	connector:connect(Kabel_l2_Co, Lamp_I2_Ci),
 	connector:connect(Kabel_l4_Co, Lamp_I4_Ci).
 	
-	
-	
-	
-	
-	
+useage(SourceInst_Pid) ->
+
+	{ok, [Head|Tail]} = connector:get_connected(SourceInst_Pid), %Bepaald alle draden aan de bron
+	{ok, CableInst_Pid} = connector:get_ResInst(Head), % Bekijkt de eerste kabel
+	{ok, [C1, C2]} = resourceInst:list_connectors(Cable_Pid), % Toont alle connecties van de kabel
+	{ok, DeviceC} = connector:get_connected(C2),% Toont de verbinding met een gebruiker
+	{ok, DeviceInst} = connector:get_ResInst(DeviceC). %Bepaald welke Gebruiker het is
+	% Hier komt dan de get resistance maar die werkt niet omdat wij die in de devicetyp geschreven hebben en niet in de deviceInst
+	% deviceType:getResistance(DeviceInst) werkt niet omdat het geen type is maar een inst
 	
 	
 	

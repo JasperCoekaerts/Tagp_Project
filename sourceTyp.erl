@@ -22,7 +22,7 @@ init_test(State) -> survivor:entry(sourceTyp_created), loop(State).
 loop(State) ->
     receive
 	{initial_state, [ResInst_Pid, TypeOptions], ReplyFn} ->
-		Out_conn = connector:create(ResInst_Pid, cable),
+		Out_conn = connector:create(ResInst_Pid, source),
 		ReplyFn(#{resInst => ResInst_Pid, on_or_off => off,  typeOptions => TypeOptions, state => State, cList => [Out_conn]}), 
 		loop(State);
 	{connections_list, S , ReplyFn} -> 

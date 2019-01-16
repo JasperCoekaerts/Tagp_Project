@@ -24,8 +24,8 @@ init_test(State) -> survivor:entry(deviceTyp_created), loop(State).
 loop(State) ->
     receive
 	{initial_state, [ResInst_Pid, TypeOptions], ReplyFn} ->
-		In = connector:create(ResInst_Pid, cable),
-	    Out = connector:create(ResInst_Pid, cable),
+		In = connector:create(ResInst_Pid, device),
+	    Out = connector:create(ResInst_Pid, device),
 		ReplyFn(#{resInst => ResInst_Pid, on_or_off => off, typeOptions => TypeOptions, state => State, cList => [In, Out]}), 
 		loop(State);
 	{connections_list, S , ReplyFn} -> 
