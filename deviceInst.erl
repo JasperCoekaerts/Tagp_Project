@@ -21,6 +21,10 @@ is_on(DeviceInst_Pid) ->
 
 loop(Host, State, DeviceTyp_Pid, CableInst_Pid) -> 
 	receive
+		{get_connectors, ReplyFn} ->
+			{ok,C_List} = resourceType:get_connections_list(DeviceTyp_Pid, State), 
+			ReplyFn(C_List),
+			loop(Host, State, DeviceTyp_Pid, CableInst_Pid);
 		switchOn -> 
 			{ok, NewState} = msg:set_ack(DeviceTyp_Pid, switchOn, State),
 			loop(Host, NewState, DeviceTyp_Pid, CableInst_Pid);

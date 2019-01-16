@@ -7,7 +7,7 @@ create(Host, ResTyp_Pid) -> {ok, spawn(?MODULE, init, [Host, ResTyp_Pid])}.
 
 init(Host, ResTyp_Pid) -> 
 	{ok, State} = resourceType:get_initial_state(ResTyp_Pid, self(), []),
-	survivor:entry({ cableInst_created, State }),
+	survivor:entry({ switchInst_created, State }),
 	loop(Host, State, ResTyp_Pid).
 
 loop(Host, State, ResTyp_Pid) -> 
