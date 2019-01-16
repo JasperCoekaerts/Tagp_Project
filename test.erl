@@ -49,5 +49,11 @@ test_circuit() ->
 	survivor:entry({connection_Schakelaar, connector:get_connected(C6)}),
 	connector:connect(C4, C8),
 	survivor:entry({connection_Gebruiker, connector:get_connected(C4)}).
+	
+test_room() -> 
+	{ok, Kabel} = resourceType:create(cableTyp, [{0,'Copper','Circle',0.2,230,0.016,3.68,{0.5,1000}}]),
+	{ok, Bron} = resourceType:create(sourceTyp, [{100, 50, direct}]),
+	{ok, Gebruiker} = resourceType:create(deviceTyp, [{100, 10, 0, 230, 1000, 2, off}]),
+	{ok, Schakelaar} = resourceType:create(switchTyp, [{on_off, 100}]),
 
 	
