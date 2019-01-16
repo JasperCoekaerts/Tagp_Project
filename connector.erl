@@ -35,22 +35,22 @@ discard(Connector_Pid) ->
 % Connectors do not survive their ResInst, nor do they 
 % move/change from one ResInst to another. 
 
-loop(ResInst_Pid, Connected_Pid, ConnectTyp_Pid) -> 
+loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid) -> 
 	receive
 		{connect, C_Pid} -> 
 			survivor:entry({connection_made, self(), C_Pid, for , ResInst_Pid}),
-			loop(ResInst_Pid, C_Pid, ConnectTyp_Pid); 
+			loop(ResInst_Pid, [C_Pid|Connected_Pid_List], ConnectTyp_Pid); 
 		disconnect -> 
 			loop(ResInst_Pid, disconnected, ConnectTyp_Pid);
 		{get_connected, ReplyFn} -> 
-			ReplyFn(Connected_Pid),
-			loop(ResInst_Pid, Connected_Pid, ConnectTyp_Pid);
+			ReplyFn(Connected_Pid_List),
+			loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid);
 		{get_ResInst, ReplyFn} -> 
 			ReplyFn(ResInst_Pid),
-			loop(ResInst_Pid, Connected_Pid, ConnectTyp_Pid);
+			loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid);
 		{get_type, ReplyFn} -> 
 			ReplyFn(ConnectTyp_Pid),
-			loop(ResInst_Pid, Connected_Pid, ConnectTyp_Pid);	
+			loop(ResInst_Pid, Connected_Pid_List, ConnectTyp_Pid);	
 		discard -> 
 			survivor:entry(connector_discarded),
 			stopped
