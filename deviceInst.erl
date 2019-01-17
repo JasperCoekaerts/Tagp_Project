@@ -38,6 +38,9 @@ loop(Host, State, DeviceTyp_Pid, CableInst_Pid) ->
 		{get_type, ReplyFn} -> 
 			ReplyFn(DeviceTyp_Pid),
 			loop(Host, State, DeviceTyp_Pid, CableInst_Pid);
+		{get_state, ReplyFn} -> 
+			ReplyFn(maps:get(state, State)),
+			loop(Host, State, DeviceTyp_Pid, CableInst_Pid);
 		OtherMessage -> 
 			CableInst_Pid ! OtherMessage,
 			loop(Host, State, DeviceTyp_Pid, CableInst_Pid)

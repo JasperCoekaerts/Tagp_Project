@@ -22,4 +22,4 @@ get_connections_list(ResTyp_Pid, State) ->
 get_locations_list(ResTyp_Pid, State) -> 
 	msg:get(ResTyp_Pid, locations_list, State). 
 	
-%%% More functions to follow later. 
+%%% More functions to follow later.
