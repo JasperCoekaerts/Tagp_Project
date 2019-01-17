@@ -16,7 +16,7 @@ init(State) -> survivor:entry(deviceTyp_created), loop(State).
 	% on - off
 	
 	
-	%TypeOptions = {Resistance, inductance, capacitance, Vmax, Pmax, sourceTyp}
+	%TypeOptions = {Resistance, inductance, capacitance, Vmax, Pmax, status}
 
 create_test() -> {ok, spawn_link(?MODULE, init_test, [{100, 10, 0, 230, 1000, 2, off}])}.%Resistance, inductance, capacitance, Vmax, kWatt/h, connectors, on-off
 init_test(State) -> survivor:entry(deviceTyp_created), loop(State).
