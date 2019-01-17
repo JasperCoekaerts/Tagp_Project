@@ -158,7 +158,7 @@ useage(SourceInst_Pid) ->
 
 	{ok, [Head|Tail]} = connector:get_connected(SourceInst_Pid), %Bepaald alle draden aan de bron
 	{ok, CableInst_Pid} = connector:get_ResInst(Head), % Bekijkt de eerste kabel
-	{ok, [C1, C2]} = resourceInst:list_connectors(CableInst_Pid), % Toont alle connecties van de kabel -> werkt niet
+	{ok, [C1|C2]} = resourceInst:list_connectors(CableInst_Pid), % Toont alle connecties van de kabel -> werkt niet
 	{ok, DeviceC} = connector:get_connected(C2),% Toont de verbinding met een gebruiker
 	{ok, DeviceInst} = connector:get_ResInst(DeviceC), %Bepaald welke Gebruiker het is
 	{ok, State} = resourceInst:getState(DeviceInst).
